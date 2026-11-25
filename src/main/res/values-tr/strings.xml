@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rekat Sayacı</string>
+    <string name="start">BAŞLA</string>
+    <plurals name="rakat">
+        <item quantity="one">rekat</item>
+        <item quantity="other">rekat</item>
+    </plurals>
+    <string name="done">yeniden başlamak için dokun</string>
+    <string name="tile">Rekat\nSayacı</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">عداد الركعات</string>
+    <string name="start">ابدأ</string>
+    <plurals name="rakat">
+        <item quantity="zero">ركعة</item>
+        <item quantity="one">ركعة</item>
+        <item quantity="two">ركعتان</item>
+        <item quantity="few">ركعات</item>
+        <item quantity="many">ركعة</item>
+        <item quantity="other">ركعة</item>
+    </plurals>
+    <string name="done">انقر للبدء من جديد</string>
+    <string name="tile">عداد\nالركعات</string>
+</resources>

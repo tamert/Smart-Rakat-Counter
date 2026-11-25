@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rakat Counter</string>
+    <string name="start">START</string>
+    <plurals name="rakat">
+        <item quantity="one">rakat</item>
+        <item quantity="other">rakats</item>
+    </plurals>
+    <string name="done">tap to start again</string>
+    <string name="tile">Rakat\nCounter</string>
+</resources>

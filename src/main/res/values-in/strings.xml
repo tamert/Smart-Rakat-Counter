@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Penghitung Rakaat</string>
+    <string name="start">MULAI</string>
+    <plurals name="rakat">
+        <item quantity="other">rakaat</item>
+    </plurals>
+    <string name="done">ketuk untuk mulai lagi</string>
+    <string name="tile">Penghitung\nRakaat</string>
+</resources>

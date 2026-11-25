@@ -1,0 +1,10 @@
+<!-- Hilal + 4 rekat noktası. 108dp adaptive ikon, güvenli alan 21..87 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FFFFFF" android:pathData="M34,48 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0" />
+    <path android:fillColor="@color/ikon_zemin" android:pathData="M45,42 a17,17 0 1,0 34,0 a17,17 0 1,0 -34,0" />
+    <path android:fillColor="#F2C14E" android:pathData="M37,78 a3.2,3.2 0 1,0 6.4,0 a3.2,3.2 0 1,0 -6.4,0
+        M46.6,78 a3.2,3.2 0 1,0 6.4,0 a3.2,3.2 0 1,0 -6.4,0
+        M56.2,78 a3.2,3.2 0 1,0 6.4,0 a3.2,3.2 0 1,0 -6.4,0
+        M65.8,78 a3.2,3.2 0 1,0 6.4,0 a3.2,3.2 0 1,0 -6.4,0" />
+</vector>
