@@ -5,6 +5,6 @@
     <plurals name="rakat">
         <item quantity="other">rakaat</item>
     </plurals>
-    <string name="done">ketuk untuk mulai lagi</string>
+    <string name="done">ketuk untuk ulangi</string>
     <string name="tile">Penghitung\nRakaat</string>
 </resources>

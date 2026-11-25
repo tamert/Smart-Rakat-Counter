@@ -10,7 +10,7 @@ You start it before the takbir and forget about it. The watch follows the postur
 |:---:|:---:|:---:|:---:|
 | <img src="docs/img/screen_start.png" width="180" alt="Start screen"> | <img src="docs/img/screen_counting.png" width="180" alt="Counting screen"> | <img src="docs/img/screen_done.png" width="180" alt="Finished screen"> | <img src="docs/img/screen_tile.png" width="180" alt="Tile"> |
 
-The images are drawn mockups of the real screens.
+Screenshots from a Galaxy Watch FE (the tile image is a mockup). Store screenshots for all four languages are in `docs/play/shots/`.
 
 ## Features
 
