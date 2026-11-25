@@ -19,7 +19,7 @@ The images are drawn mockups of the real screens.
 - Dim gray number on a black screen while counting, so the display does not distract you.
 - Long press to stop, so an accidental touch during sujood does not end the session.
 - A tile on the watch face carousel to open the app with one tap.
-- Every session is recorded as a CSV file on the watch, for later analysis and tuning.
+- Debug builds (the ones `install.sh` installs) record every session as a CSV file on the watch, for later analysis and tuning. The Play Store build records nothing and needs no permissions.
 - English by default, Turkish, Arabic and Indonesian picked automatically from the watch language.
 - No internet permission and app backup is disabled. Nothing leaves the watch.
 
@@ -111,9 +111,26 @@ The screen stays on during a session. The wake lock is held for at most one hour
 
 English is the default. If the watch language is Turkish, Arabic or Indonesian, the app uses that language automatically. There is no setting inside the app.
 
+## Release build (Google Play)
+
+The release build listens to the gravity sensor only, writes no files and requests no permissions (`BODY_SENSORS` is declared in `src/debug/AndroidManifest.xml` only). Signing values come from `~/.gradle/gradle.properties`, never from the repo:
+
+```
+REKAT_STORE_FILE=/path/to/upload.jks
+REKAT_STORE_PASSWORD=...
+REKAT_KEY_ALIAS=upload
+REKAT_KEY_PASSWORD=...
+```
+
+```sh
+./gradlew bundleRelease   # build/outputs/bundle/release/rekat-sayaci-release.aab
+```
+
+Store texts are in [docs/play/listing.md](docs/play/listing.md), the privacy policy in [PRIVACY.md](PRIVACY.md).
+
 ## Recording and analysis
 
-Each session writes every non-wakeup sensor of the watch at about 50 Hz to a CSV file in the app's private storage, `files/kayit_<date>_<time>.csv`. Lines are `t_ns,sensor,v0,v1,...`, header lines start with `#`, and each counted rakat is written as `# rekat <n> <t_ns>`.
+Recording is on only in debug builds. Each session writes every non-wakeup sensor of the watch at about 50 Hz to a CSV file in the app's private storage, `files/kayit_<date>_<time>.csv`. Lines are `t_ns,sensor,v0,v1,...`, header lines start with `#`, and each counted rakat is written as `# rekat <n> <t_ns>`.
 
 Copy a recording to your computer:
 

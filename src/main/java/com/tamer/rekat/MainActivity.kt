@@ -1,6 +1,7 @@
 package com.tamer.rekat
 
 import android.app.Activity
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -18,10 +19,11 @@ import android.view.WindowManager
 import android.widget.Button
 import java.io.BufferedWriter
 import java.io.File
+import java.io.Writer
 import java.text.SimpleDateFormat
 import java.util.Date
 
-// Kayıt modu: tüm sensörleri ~50 Hz CSV'ye yazar. Satır: t_ns,sensor,v0,v1,...
+// Kayıt modu (sadece debug build): tüm sensörleri ~50 Hz CSV'ye yazar. Satır: t_ns,sensor,v0,v1,...
 // Dosyalar: files/kayit_*.csv  (adb exec-out run-as com.tamer.rekat cat files/<ad>)
 class MainActivity : Activity(), SensorEventListener {
     private lateinit var sm: SensorManager
@@ -30,6 +32,8 @@ class MainActivity : Activity(), SensorEventListener {
     @Volatile private var out: BufferedWriter? = null
     // ponytail: activity + wake lock; ekran kapanınca veri kesilirse foreground service'e geç
     private lateinit var wake: PowerManager.WakeLock
+    // Mağaza (release) sürümü dosya yazmaz, sadece gravity dinler, izin istemez.
+    private val kayit by lazy { applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0 }
 
     // Canlı sayım (rekat.py ile aynı eşikler). Sadece sensör thread'inde değişir.
     private var winStart = 0L; private var n = 0
@@ -71,7 +75,7 @@ class MainActivity : Activity(), SensorEventListener {
         sm = getSystemService(SensorManager::class.java)
         wake = getSystemService(PowerManager::class.java)
             .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "rekat:kayit")
-        if (checkSelfPermission(android.Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED)
+        if (kayit && checkSelfPermission(android.Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED)
             requestPermissions(arrayOf(android.Manifest.permission.BODY_SENSORS), 1)
         btn = Button(this).apply {
             textSize = 18f
@@ -86,9 +90,10 @@ class MainActivity : Activity(), SensorEventListener {
 
     private fun start() {
         val name = "kayit_" + SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".csv"
-        val w = File(filesDir, name).bufferedWriter()
-        val sensors = sm.getSensorList(Sensor.TYPE_ALL)
+        val w = if (kayit) File(filesDir, name).bufferedWriter() else BufferedWriter(bosYazici)
+        val sensors = if (kayit) sm.getSensorList(Sensor.TYPE_ALL)
             .filter { !it.isWakeUpSensor && it.reportingMode != Sensor.REPORTING_MODE_ONE_SHOT }
+        else listOfNotNull(sm.getDefaultSensor(Sensor.TYPE_GRAVITY))
         sensors.forEach { w.write("# ${it.stringType} | ${it.name} | ${it.vendor}\n") }
         n = 0; run = '.'; rekat = 0; secdeGoruldu = true
         out = w
@@ -99,6 +104,13 @@ class MainActivity : Activity(), SensorEventListener {
         btn.setBackgroundColor(0xFF000000.toInt())
         btn.setTextColor(0xFF3A3A3A.toInt())
         btn.text = buyuk("0", resources.getQuantityString(R.plurals.rakat, 0))
+    }
+
+    // Writer.nullWriter() API 33+, minSdk 30
+    private val bosYazici = object : Writer() {
+        override fun write(c: CharArray, o: Int, l: Int) {}
+        override fun flush() {}
+        override fun close() {}
     }
 
     private fun buyuk(sayi: String, alt: String) = SpannableString("$sayi\n$alt")
